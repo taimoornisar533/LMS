@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
         },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "User Name",
+            hintText: "User Email",
             border:
             OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0)

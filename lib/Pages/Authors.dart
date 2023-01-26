@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_final/Models/AuthorModel.dart';
 import 'package:mobile_final/Components/Ratings.dart';
+import 'package:mobile_final/Pages/AddAuthor.dart';
 import 'package:mobile_final/Pages/AuthorDetails.dart';
+import '../Services/firebase_crud.dart';
 class Authors extends StatefulWidget {
   @override
   State<Authors> createState() => _AuthorsState();
@@ -10,23 +13,25 @@ class Authors extends StatefulWidget {
 
 class _AuthorsState extends State<Authors> {
   ScrollController _scrollController = ScrollController();
-  static List<AuthorModel> authorList = [
-    AuthorModel(1,"Stephen King","75",5,"USA","https://images.unsplash.com/photo-1511165403689-1e53da0499fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1664&q=80"),
-    AuthorModel(2,"J.K Rowling","60",4,"USA","https://images.unsplash.com/photo-1610466024868-910c6e7e8929?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8SkslMjByb3dsaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-    AuthorModel(3,"Paulo Colheo","85",4,"USA","https://images.unsplash.com/photo-1522742943744-b3cd4e6f98e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8UGF1bG8lMjBDb2VsaG98ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"),
-    AuthorModel(4,"Mark Cuban","75",3,"USA","https://images.unsplash.com/photo-1622463097549-289d80f7521d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8TWFyayUyMEN1YmFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-  ];
-  List<AuthorModel> toDisplay = List.from(authorList);
-  void updateList(String value){
-    setState(() {
-      toDisplay = authorList.where((element) => element.authorName!.toLowerCase().contains(value.toLowerCase())).toList();
-    });
-  }
+  String search = "";
+  Stream<QuerySnapshot> authorList = FirebaseCrud.readAuthors();
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(context,
+              MaterialPageRoute(
+                  builder: ((context) => AddAuthor())
+              )
+          );
+        },
+        backgroundColor: const Color(0xff262F3E),
+        tooltip: "Add Author",
+        child: const Icon(Icons.add),
+      ),
       body: Column(
         children: [
           Container(
@@ -57,7 +62,11 @@ class _AuthorsState extends State<Authors> {
                         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
                       });
                     },
-                    onChanged: (value) => updateList(value),
+                    onChanged: (value){
+                      setState(() {
+                        search = value;
+                      });
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -76,40 +85,48 @@ class _AuthorsState extends State<Authors> {
             ),
           ),
           Expanded(
-              child:toDisplay.isNotEmpty ?
-              ListView.separated(
-                itemCount: toDisplay.length,
-                separatorBuilder: (ctx, i) => Divider(
-                  thickness: 1,
-                  height: 36,
-                ),
-                itemBuilder: (ctx, i) => InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(
-                            builder: ((context) => AuthorDetail(authorId: i))
-                        )
-                    );
-                  },
-                  child: AuthorsListItem(
-                    authorAge: toDisplay[i].authorAge!,
-                    authorName: "${toDisplay[i].authorName}",
-                    authorRating: toDisplay[i].authorRating!,
-                    authorImageUrl: toDisplay[i].authorPictureUrl!,
-                  ),
-                ),
-              )
-                  :
-              Center(
-                child: Text(
-                  "No results found...",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-              ),
+            child: StreamBuilder(
+              stream: authorList,
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      var data = snapshot.data!.docs[index].data()
+                      as Map<String, dynamic>;
+
+                      if (search == "") {
+                        return Card(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
+                            child: AuthorsListItem(
+                              authorAge: data['author_age'],
+                              authorName: "${data['author_name']}",
+                              authorRating: int.parse(data['author_rating']),
+                              authorImageUrl: data['author_picture'],
+                            ),
+                          ),
+                        );
+                      }
+                      if (data['author_name']
+                          .toString()
+                          .toLowerCase()
+                          .contains(search.toLowerCase())) {
+                        return Card(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
+                            child: AuthorsListItem(
+                              authorAge: data['author_age'],
+                              authorName: "${data['author_name']}",
+                              authorRating: int.parse(data['author_rating']),
+                              authorImageUrl: data['author_picture'],
+                            ),
+                          ),
+                        );
+                      }
+                      return Container();
+                    });
+              },
+            ),
           ),
         ],
       ),

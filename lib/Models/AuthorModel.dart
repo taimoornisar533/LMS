@@ -1,10 +1,10 @@
 class AuthorModel{
-  int? authorId;
-  String? authorName;
-  String? authorAge;
-  int? authorRating;
-  String? authorCountry;
-  String? authorPictureUrl;
+  final String? authorId;
+  final String? authorName;
+  final String? authorAge;
+  final int? authorRating;
+  final String? authorCountry;
+  final String? authorPictureUrl;
 
-  AuthorModel(this.authorId,this.authorName,this.authorAge,this.authorRating,this.authorCountry,this.authorPictureUrl);
+  AuthorModel({this.authorId = '',required this.authorName,required this.authorAge,required this.authorRating,required this.authorCountry,required this.authorPictureUrl});
 }

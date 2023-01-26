@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../Components/Ratings.dart';
 import '../Models/AuthorModel.dart';
 import '../Models/BookModel.dart';
-import 'Admin.dart';
-import 'Authors.dart';
-import 'Shelf.dart';
+
 class AuthorDetail extends StatefulWidget {
   final int authorId;
   AuthorDetail({super.key, required this.authorId});
@@ -22,59 +20,20 @@ class _AuthorDetailState extends State<AuthorDetail> {
     ),
   );
   static List<AuthorModel> authorList = [
-    AuthorModel(1,"Stephen King","75",5,"USA","https://images.unsplash.com/photo-1511165403689-1e53da0499fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1664&q=80"),
-    AuthorModel(2,"J.K Rowling","60",5,"USA","https://images.unsplash.com/photo-1610466024868-910c6e7e8929?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8SkslMjByb3dsaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-    AuthorModel(3,"Paulo Colheo","85",5,"USA","https://images.unsplash.com/photo-1522742943744-b3cd4e6f98e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8UGF1bG8lMjBDb2VsaG98ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"),
-    AuthorModel(4,"Mark Cuban","75",5,"USA","https://images.unsplash.com/photo-1622463097549-289d80f7521d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8TWFyayUyMEN1YmFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+    AuthorModel(authorId: "1",authorName: "Stephen King", authorAge: "75", authorRating: 5, authorCountry: "USA", authorPictureUrl: "https://images.unsplash.com/photo-1511165403689-1e53da0499fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1664&q=80"),
+    AuthorModel(authorId: "2",authorName: "J.K Rowling", authorAge: "60", authorRating: 4, authorCountry: "USA", authorPictureUrl: "https://images.unsplash.com/photo-1610466024868-910c6e7e8929?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8SkslMjByb3dsaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+    AuthorModel(authorId: "3",authorName: "Paulo Coleho", authorAge: "80", authorRating: 4, authorCountry: "USA", authorPictureUrl: "https://images.unsplash.com/photo-1522742943744-b3cd4e6f98e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8UGF1bG8lMjBDb2VsaG98ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"),
+    AuthorModel(authorId: "4",authorName: "Mark Cuban", authorAge: "75", authorRating: 3, authorCountry: "USA", authorPictureUrl: "https://images.unsplash.com/photo-1622463097549-289d80f7521d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8TWFyayUyMEN1YmFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
   ];
   static List<BookModel> bookList = [
-    BookModel(1,"Harry Potter", authorList[1], 5, "Book by J.K Rowling blah blah", DateTime(1998,1,1,1), "https://images.unsplash.com/photo-1610466024868-910c6e7e8929?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8SkslMjByb3dsaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-    BookModel(2,"IT", authorList[0],4, "Book by Stephen King blah blah", DateTime(1980,1,1,1), "https://media.istockphoto.com/id/523361201/photo/book-of-stephen-king.jpg?s=1024x1024&w=is&k=20&c=G02NSEEcx9268pOGCVL3j5hqtjj393ZZDrN37g01aMo="),
-  ];
-  int currentIndex = 1;
-  final screens = <Widget>[
-    Center(
-      child: Text("HOME : to be added"),
-    ),
-    Authors(),
-    Shelf(),
-    AdminPage(),
+    BookModel(bookId: "1",bookName: "Harry Potter",bookAuthor:"J.K Rowling",bookRating: 5,bookBio: "Book by J.K Rowling blah blah",bookPublishedDate: DateTime(1998,1,1,1),bookImageUrl: "https://images.unsplash.com/photo-1610466024868-910c6e7e8929?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8SkslMjByb3dsaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+    BookModel(bookId:"2",bookName: "IT",bookAuthor: "Stephen King",bookRating: 4,bookBio: "Book by Stephen King blah blah",bookPublishedDate: DateTime(1980,1,1,1),bookImageUrl: "https://media.istockphoto.com/id/523361201/photo/book-of-stephen-king.jpg?s=1024x1024&w=is&k=20&c=G02NSEEcx9268pOGCVL3j5hqtjj393ZZDrN37g01aMo="),
   ];
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (int newIndex){
-          setState(() {
-            currentIndex = newIndex;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(Icons.home),
-            backgroundColor: Color(0xff262F3E),
-          ),
-          BottomNavigationBarItem(
-            label: 'Authors',
-            icon: Icon(Icons.perm_contact_calendar_sharp),
-            backgroundColor: Color(0xff262F3E),
-          ),
-          BottomNavigationBarItem(
-            label: 'Shelf',
-            icon: Icon(Icons.add_chart),
-            backgroundColor: Color(0xff262F3E),
-          ),
-          BottomNavigationBarItem(
-            label: 'Admin',
-            icon: Icon(Icons.person),
-            backgroundColor: Color(0xff262F3E),
-          ),
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
