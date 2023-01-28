@@ -101,6 +101,15 @@ class _ShelfState extends State<Shelf> {
                           child: Padding(
                             padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
                             child: BooksListItem(
+                              book: BookModel(
+                                bookName: data['book_name'],
+                                bookBio: data['book_bio'],
+                                bookAuthor: data['book_author'],
+                                bookImageUrl: data['book_picture'],
+                                bookRating: int.parse(data['book_rating']),
+                                bookId: data['book_id'],
+                                bookPublishedDate: DateTime.parse(data['book_published_date'])
+                              ),
                               bookPublishedDate: DateFormat('d MMM, yyyy').format(DateTime.parse(data['book_published_date'])),
                               bookTitle: data['book_name'],
                               bookRating: int.parse(data['book_rating']),
@@ -117,6 +126,15 @@ class _ShelfState extends State<Shelf> {
                           child: Padding(
                             padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
                             child: BooksListItem(
+                              book: BookModel(
+                                  bookName: data['book_name'],
+                                  bookBio: data['book_bio'],
+                                  bookAuthor: data['book_author'],
+                                  bookImageUrl: data['book_picture'],
+                                  bookRating: int.parse(data['book_rating']),
+                                  bookId: data['book_id'],
+                                  bookPublishedDate: DateTime.parse(data['book_published_date'])
+                              ),
                               bookPublishedDate: DateFormat('d MMM, yyyy').format(DateTime.parse(data['book_published_date'])),
                               bookTitle: data['book_name'],
                               bookRating: int.parse(data['book_rating']),
@@ -130,42 +148,6 @@ class _ShelfState extends State<Shelf> {
               },
             ),
           ),
-          /*Expanded(
-            child: toDisplay.isNotEmpty ?
-            ListView.separated(
-              itemCount: toDisplay.length,
-              separatorBuilder: (ctx, i) => Divider(
-                thickness: 1,
-                height: 36,
-              ),
-              itemBuilder: (ctx, i) => InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(
-                          builder: ((context) => BookDetails(bookId: i,))
-                      )
-                  );
-                },
-                child: BooksListItem(
-                bookPublishedDate: DateFormat('d MMM, yyyy').format(toDisplay[i].bookPublishedDate!),
-                bookTitle: toDisplay[i].bookName!,
-                bookRating: toDisplay[i].bookRating!,
-                bookImageUrl: toDisplay[i].bookImageUrl!,
-                ),
-              ),
-            )
-                :
-            const Center(
-              child: Text(
-                "No results found...",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold
-                ),
-              ),
-            ),
-            ),*/
         ],
       ),
     );
@@ -178,9 +160,11 @@ class BooksListItem extends StatelessWidget {
     required this.bookPublishedDate,
     required this.bookTitle,
     required this.bookImageUrl,
+    required this.book,
   });
 
   final int bookRating;
+  final BookModel book;
   final String bookPublishedDate;
   final String bookTitle;
   final String bookImageUrl;
@@ -245,10 +229,19 @@ class BooksListItem extends StatelessWidget {
             Spacer(),
             Padding(
               padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
-              child: Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.black26,
-                size: 20,
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                          builder: ((context) => BookDetails(book: book,))
+                      )
+                  );
+                },
+                child: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Colors.black26,
+                  size: 20,
+                ),
               ),
             ),
           ],

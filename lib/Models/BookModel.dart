@@ -5,7 +5,7 @@ class BookModel{
   final String? bookAuthor;
   final int? bookRating;
   final String? bookBio;
-  final DateTime? bookPublishedDate;
+  final DateTime bookPublishedDate;
   final String? bookImageUrl;
 
   BookModel(

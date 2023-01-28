@@ -93,12 +93,19 @@ class _AuthorsState extends State<Authors> {
                     itemBuilder: (context, index) {
                       var data = snapshot.data!.docs[index].data()
                       as Map<String, dynamic>;
-
                       if (search == "") {
                         return Card(
                           child: Padding(
                             padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
                             child: AuthorsListItem(
+                              auth: AuthorModel(authorName: data['author_name'],
+                                  authorAge: data['author_age'],
+                                  authorRating: int.parse(data['author_rating']),
+                                  authorCountry: data['author_country'],
+                                  authorPictureUrl: data['author_picture'],
+                                  authorId: data['author_id']
+                              ),
+                              authorId: data['author_id'],
                               authorAge: data['author_age'],
                               authorName: "${data['author_name']}",
                               authorRating: int.parse(data['author_rating']),
@@ -115,6 +122,14 @@ class _AuthorsState extends State<Authors> {
                           child: Padding(
                             padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
                             child: AuthorsListItem(
+                              auth: AuthorModel(authorName: data['author_name'],
+                                  authorAge: data['author_age'],
+                                  authorRating: int.parse(data['author_rating']),
+                                  authorCountry: data['author_country'],
+                                  authorPictureUrl: data['author_picture'],
+                                  authorId: data['author_id']
+                              ),
+                              authorId: data['author_id'],
                               authorAge: data['author_age'],
                               authorName: "${data['author_name']}",
                               authorRating: int.parse(data['author_rating']),
@@ -135,16 +150,19 @@ class _AuthorsState extends State<Authors> {
 }
 class AuthorsListItem extends StatelessWidget {
   const AuthorsListItem({
+    required this.authorId,
     required this.authorAge,
     required this.authorRating,
     required this.authorName,
     required this.authorImageUrl,
+    required this.auth,
   });
-
+  final String authorId;
   final String authorAge;
   final int authorRating;
   final String authorName;
   final String authorImageUrl;
+  final AuthorModel auth;
 
   @override
   Widget build(BuildContext context) {
@@ -184,10 +202,19 @@ class AuthorsListItem extends StatelessWidget {
           Spacer(),
           Padding(
             padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
-            child: Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: Colors.black26,
-              size: 20,
+            child: GestureDetector(
+              onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(
+                        builder: ((context) => AuthorDetail(author: auth,))
+                    )
+                );
+              },
+              child: Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.black26,
+                size: 20,
+              ),
             ),
           ),
         ],

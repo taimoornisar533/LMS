@@ -4,13 +4,17 @@ import '../Models/AuthorModel.dart';
 import '../Models/BookModel.dart';
 
 class AuthorDetail extends StatefulWidget {
-  final int authorId;
-  AuthorDetail({super.key, required this.authorId});
+  final AuthorModel author;
+  AuthorDetail({super.key, required this.author});
   @override
   State<AuthorDetail> createState() => _AuthorDetailState();
 }
 
 class _AuthorDetailState extends State<AuthorDetail> {
+  static List<BookModel> bookList = [
+    BookModel(bookId: "1",bookName: "Harry Potter",bookAuthor:"J.K Rowling",bookRating: 5,bookBio: "Book by J.K Rowling blah blah",bookPublishedDate: DateTime(1998,1,1,1),bookImageUrl: "https://images.unsplash.com/photo-1610466024868-910c6e7e8929?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8SkslMjByb3dsaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+    BookModel(bookId:"2",bookName: "IT",bookAuthor: "Stephen King",bookRating: 4,bookBio: "Book by Stephen King blah blah",bookPublishedDate: DateTime(1980,1,1,1),bookImageUrl: "https://media.istockphoto.com/id/523361201/photo/book-of-stephen-king.jpg?s=1024x1024&w=is&k=20&c=G02NSEEcx9268pOGCVL3j5hqtjj393ZZDrN37g01aMo="),
+  ];
   final ButtonStyle flatButtonStyle = TextButton.styleFrom(
     foregroundColor: Colors.black87,
     minimumSize: Size(88, 36),
@@ -19,16 +23,12 @@ class _AuthorDetailState extends State<AuthorDetail> {
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
     ),
   );
-  static List<AuthorModel> authorList = [
+/*  static List<AuthorModel> authorList = [
     AuthorModel(authorId: "1",authorName: "Stephen King", authorAge: "75", authorRating: 5, authorCountry: "USA", authorPictureUrl: "https://images.unsplash.com/photo-1511165403689-1e53da0499fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1664&q=80"),
     AuthorModel(authorId: "2",authorName: "J.K Rowling", authorAge: "60", authorRating: 4, authorCountry: "USA", authorPictureUrl: "https://images.unsplash.com/photo-1610466024868-910c6e7e8929?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8SkslMjByb3dsaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
     AuthorModel(authorId: "3",authorName: "Paulo Coleho", authorAge: "80", authorRating: 4, authorCountry: "USA", authorPictureUrl: "https://images.unsplash.com/photo-1522742943744-b3cd4e6f98e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8UGF1bG8lMjBDb2VsaG98ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"),
     AuthorModel(authorId: "4",authorName: "Mark Cuban", authorAge: "75", authorRating: 3, authorCountry: "USA", authorPictureUrl: "https://images.unsplash.com/photo-1622463097549-289d80f7521d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8TWFyayUyMEN1YmFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-  ];
-  static List<BookModel> bookList = [
-    BookModel(bookId: "1",bookName: "Harry Potter",bookAuthor:"J.K Rowling",bookRating: 5,bookBio: "Book by J.K Rowling blah blah",bookPublishedDate: DateTime(1998,1,1,1),bookImageUrl: "https://images.unsplash.com/photo-1610466024868-910c6e7e8929?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8SkslMjByb3dsaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-    BookModel(bookId:"2",bookName: "IT",bookAuthor: "Stephen King",bookRating: 4,bookBio: "Book by Stephen King blah blah",bookPublishedDate: DateTime(1980,1,1,1),bookImageUrl: "https://media.istockphoto.com/id/523361201/photo/book-of-stephen-king.jpg?s=1024x1024&w=is&k=20&c=G02NSEEcx9268pOGCVL3j5hqtjj393ZZDrN37g01aMo="),
-  ];
+  ];*/
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -91,7 +91,7 @@ class _AuthorDetailState extends State<AuthorDetail> {
                         children: [
                           SizedBox(height: 175),
                           Text(
-                            authorList[widget.authorId].authorName!,
+                            "${widget.author.authorName}",
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
@@ -100,7 +100,7 @@ class _AuthorDetailState extends State<AuthorDetail> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            "${authorList[widget.authorId].authorAge} yrs old",
+                            "${widget.author.authorAge} yrs old",
                             style: TextStyle(
                               color: Colors.grey[700],
                               fontSize: 16,
@@ -109,7 +109,7 @@ class _AuthorDetailState extends State<AuthorDetail> {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            authorList[widget.authorId].authorCountry!,
+                           "${widget.author.authorCountry}",
                             style: TextStyle(
                               color: Colors.grey[700],
                               fontSize: 16,
@@ -117,7 +117,7 @@ class _AuthorDetailState extends State<AuthorDetail> {
                             ),
                           ),
                           SizedBox(height: 10),
-                          Ratings(rating: authorList[widget.authorId].authorRating!),
+                          Ratings(rating: widget.author.authorRating?.toInt() ?? 0),
                           SizedBox(height: 25),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,7 +186,7 @@ class _AuthorDetailState extends State<AuthorDetail> {
                     heightFactor: 3.2,
                     child: CircleAvatar(
                       radius: 110,
-                      backgroundImage: NetworkImage(authorList[widget.authorId].authorPictureUrl!),
+                      backgroundImage: NetworkImage(widget.author.authorPictureUrl?.toString() ?? ''),
                     ),
                   ),
                 ],
