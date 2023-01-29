@@ -6,6 +6,7 @@ import 'package:mobile_final/Models/BookModel.dart';
 import 'package:mobile_final/Components/Ratings.dart';
 import 'package:mobile_final/Pages/AddBook.dart';
 import 'package:mobile_final/Pages/BookDetails.dart';
+import 'package:mobile_final/Pages/BorrowBook.dart';
 import '../Models/AuthorModel.dart';
 import '../Services/firebase_crud.dart';
 class Shelf extends StatefulWidget {
@@ -114,6 +115,7 @@ class _ShelfState extends State<Shelf> {
                               bookTitle: data['book_name'],
                               bookRating: int.parse(data['book_rating']),
                               bookImageUrl: data['book_picture'],
+                              bookId: data['book_id'],
                             ),
                           ),
                         );
@@ -139,6 +141,7 @@ class _ShelfState extends State<Shelf> {
                               bookTitle: data['book_name'],
                               bookRating: int.parse(data['book_rating']),
                               bookImageUrl: data['book_picture'],
+                              bookId: data['book_id'],
                             ),
                           ),
                         );
@@ -161,6 +164,7 @@ class BooksListItem extends StatelessWidget {
     required this.bookTitle,
     required this.bookImageUrl,
     required this.book,
+    required this.bookId
   });
 
   final int bookRating;
@@ -168,6 +172,7 @@ class BooksListItem extends StatelessWidget {
   final String bookPublishedDate;
   final String bookTitle;
   final String bookImageUrl;
+  final String bookId;
 
   @override
   Widget build(BuildContext context) {
@@ -239,6 +244,47 @@ class BooksListItem extends StatelessWidget {
                 },
                 child: Icon(
                   Icons.arrow_forward_ios_rounded,
+                  color: Colors.black26,
+                  size: 20,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                          builder: ((context) => AddBorrow(book: book,))
+                      )
+                  );
+                },
+                child: Icon(
+                  Icons.attach_money,
+                  color: Colors.black26,
+                  size: 20,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
+              child: GestureDetector(
+                onTap: () async {
+                  var response =
+                  await FirebaseCrud.deleteBook(docId: bookId);
+                  if (response.code != 200) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content:
+                            Text(response.message.toString()),
+                          );
+                        });
+                  }
+                },
+                child: Icon(
+                  Icons.delete,
                   color: Colors.black26,
                   size: 20,
                 ),

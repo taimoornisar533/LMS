@@ -6,12 +6,12 @@ import 'package:mobile_final/Components/Ratings.dart';
 import 'package:mobile_final/Pages/AddAuthor.dart';
 import 'package:mobile_final/Pages/AuthorDetails.dart';
 import '../Services/firebase_crud.dart';
-class Authors extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  State<Authors> createState() => _AuthorsState();
+  State<Home> createState() => _HomeState();
 }
 
-class _AuthorsState extends State<Authors> {
+class _HomeState extends State<Home> {
   ScrollController _scrollController = ScrollController();
   String search = "";
   Stream<QuerySnapshot> authorList = FirebaseCrud.readAuthors();
@@ -35,18 +35,18 @@ class _AuthorsState extends State<Authors> {
       body: Column(
         children: [
           Container(
-              width: width,
-              height: height * 0.22,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50),bottomRight: Radius.circular(50)),
-                  color: Color(0xff262F3E)
-              ),
+            width: width,
+            height: height * 0.22,
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50),bottomRight: Radius.circular(50)),
+                color: Color(0xff262F3E)
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   child: Text(
-                    "Authors",
+                    "Home",
                     style: TextStyle(
                       fontSize: 35,
                       color: Colors.white,
@@ -74,10 +74,10 @@ class _AuthorsState extends State<Authors> {
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide.none,
                       ),
-                     contentPadding: EdgeInsets.all(5),
-                     hintText: "Search for Authors",
-                     prefixIcon: Icon(Icons.search),
-                     prefixIconColor: Color(0xff262F3E),
+                      contentPadding: EdgeInsets.all(5),
+                      hintText: "Search for Authors",
+                      prefixIcon: Icon(Icons.search),
+                      prefixIconColor: Color(0xff262F3E),
                     ),
                   ),
                 )
@@ -212,30 +212,6 @@ class AuthorsListItem extends StatelessWidget {
               },
               child: Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.black26,
-                size: 20,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
-            child: GestureDetector(
-              onTap: () async {
-                var response =
-                await FirebaseCrud.deleteAuthor(docId: authorId);
-                if (response.code != 200) {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content:
-                          Text(response.message.toString()),
-                        );
-                      });
-                }
-              },
-              child: Icon(
-                Icons.delete,
                 color: Colors.black26,
                 size: 20,
               ),

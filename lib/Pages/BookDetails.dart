@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mobile_final/Models/BookModel.dart';
 import 'package:mobile_final/Components/Ratings.dart';
 import 'package:intl/intl.dart';
-import '../Models/AuthorModel.dart';
+import 'package:mobile_final/Pages/BorrowBook.dart';
+import '../Models/BorrowModel.dart';
+import '../Models/BookModel.dart';
+
 class BookDetails extends StatefulWidget {
   final BookModel book;
   BookDetails({super.key,required this.book});
@@ -16,6 +19,7 @@ class _BookDetailsState extends State<BookDetails> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
+
       body: SafeArea(
         child: SingleChildScrollView(
             child: Column(

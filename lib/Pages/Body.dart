@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_final/Pages/Admin.dart';
 import 'package:mobile_final/Pages/Authors.dart';
 import 'package:mobile_final/Pages/Shelf.dart';
+import 'package:mobile_final/Pages/Home.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -11,9 +12,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   int currentIndex = 1;
   final screens = <Widget>[
-    Center(
-      child: Text("HOME : to be added"),
-    ),
+    Home(),
     Authors(),
     Shelf(),
     AdminPage(),
