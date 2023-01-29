@@ -24,18 +24,6 @@ class _AdminPageState extends State<AdminPage> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context,
-              MaterialPageRoute(
-                  builder: ((context) => AddBook())
-              )
-          );
-        },
-        backgroundColor: const Color(0xff262F3E),
-        tooltip: "Add Book",
-        child: const Icon(Icons.add),
-      ),
       body: Column(
         children: [
           Container(
@@ -272,9 +260,8 @@ class BooksListItem extends StatelessWidget {
             Spacer(),
             TextButton(
               style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(5.0),
                 primary: const Color.fromARGB(255, 143, 133, 226),
-                textStyle: const TextStyle(fontSize: 15),
+                textStyle: const TextStyle(fontSize: 12.5),
               ),
               child: const Text('Return'),
               onPressed: () async {

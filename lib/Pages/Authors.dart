@@ -218,7 +218,7 @@ class AuthorsListItem extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
+            padding: const EdgeInsets.fromLTRB(5, 5, 20, 5),
             child: GestureDetector(
               onTap: () async {
                 var response =

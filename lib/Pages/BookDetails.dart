@@ -131,18 +131,27 @@ class _BookDetailsState extends State<BookDetails> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       heightFactor: 10.2,
-                      child: Container(
-                        width: width * 0.80,
-                        height: height * 0.08,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff262F3E),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "BORROW",
-                            style: TextStyle(
-                              color: Color(0xff2492eb),
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.push(context,
+                              MaterialPageRoute(
+                                  builder: ((context) => AddBorrow(book: widget.book,))
+                              )
+                          );
+                        },
+                        child: Container(
+                          width: width * 0.80,
+                          height: height * 0.08,
+                          decoration: BoxDecoration(
+                            color: const Color(0xff262F3E),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "BORROW",
+                              style: TextStyle(
+                                color: Color(0xff2492eb),
+                              ),
                             ),
                           ),
                         ),
